@@ -19,26 +19,26 @@
 ## Milestone-2
 1.Setting up frontend
 
-  1.Tailwindcss(from the website)
+     1.Tailwindcss(from the website)
 
-  2.React ( npm create vite@latest frontend)
+     2.React ( npm create vite@latest frontend)
   
 2.Setting up dependencies
 
-  1. installing package.json using npm init -y
+     1. installing package.json using npm init -y
      
-  2.Express(npm i express)
+     2.Express(npm i express)
   
-  3.Cors(npm i cors)
+     3.Cors(npm i cors)
   
-  4.Mongoose(npm i mongoose)
+     4.Mongoose(npm i mongoose)
   
-  5.Nodemon(npm i nodemon)
+     5.Nodemon(npm i nodemon)
 
 3.Created 2 folders frontend and backend
 
-1.Created the Login page using react
+      1.Created the Login page using react
 
-2.upgraded the page with toggle dark & light mode
+      2.upgraded the page with toggle dark & light mode
 
 3. Used gitignore to remove all extra files while pushing
