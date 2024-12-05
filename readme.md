@@ -55,3 +55,17 @@ We used **Express** to set up the backend server, which listens to and handles i
    npm init -y
    npm install express mongoose dotenv
 
+## Milestone 4
+1. User Model for our database,
+2. Setting up controllers to handle user related data
+3. enabling file using Multer.
+
+        ACID
+    A - Atomicity
+    C - Consistency
+    I - Isolation
+    D - Durability
+
+4. Session
+
+
