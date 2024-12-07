@@ -4,4 +4,4 @@ export default class errorHandler extends Error{
         Error.captureStackTrace(this);
         this.statusCode=statusCode;
     }
-}
+};
