@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Login = () => {
+const LoginPage = () => {
   const [darkMode, setDarkMode] = useState(true); // State to track the theme
 
   return (
@@ -48,4 +48,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
