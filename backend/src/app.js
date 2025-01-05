@@ -1,5 +1,5 @@
-import express from 'express';
-import userRouter from './routes/user.route';
+const express = require('express');
+const userRouter = require('./routes/user.route.js');
 
 if (process.env.NODE_ENV !== 'PRODUCTION') {
   require('dotenv').config({
@@ -8,6 +8,8 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 }
 
 const app = express();
+// M6
+app.use(express.json());
 
 app.get('/', (req, res) => {
   return res.send('Welcome to backend');
@@ -16,5 +18,4 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 
 // connecting the database and running the server
-
-export default app;
+module.exports = app;
