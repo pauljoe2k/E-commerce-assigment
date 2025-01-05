@@ -66,6 +66,8 @@ We used **Express** to set up the backend server, which listens to and handles i
     I - Isolation
     D - Durability
 
-4. Session
-
+Milestone 5
+Created a signup page
+Created validation Object using RegEx
+Setup React-Router for the Present Pages
 
