@@ -1,20 +1,19 @@
-import './App.css'
-import LoginPage from './components/Authentication/Login.jsx';
-import Login from './components/Authentication/Login.jsx'
-import SignUpPage from './components/Authentication/SignUpPage.jsx'
-function App() {
 
+import LoginPage from './component/auth/Login';
+import SignupForm from './component/auth/Signup';
+import { Routes, Route } from 'react-router-dom';
+function App() {
   return (
     <>
-    <div>
+      {/* <LoginPage /> */}
+      {/* <SignupForm /> */}
       <Routes>
-        <Routes path = "/"/>
-        <Route path = "/signup" element  
+        <Route path="/" />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
-    <SignUpPage/>
-    </div>
     </>
-  )
+  );
 }
 
 export default App;
