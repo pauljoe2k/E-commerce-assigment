@@ -1,5 +1,6 @@
+const dotenv = require('dotenv')
 if (process.env.NODE_ENV !== 'PRODUCTION') {
-  require('dotenv').config({
+  dotenv.config({
     path: './src/config/.env',
   });
 }
