@@ -4,7 +4,7 @@ const upload = multer({ dest: 'temp-uploads/' });
 const express = require('express');
 const {
   createProductController, getProductDataController
-} = require('../controllers/product.controller.js');
+} = require('../controllers/productcontroller.js');
 const router = express.Router();
 
 router.post(

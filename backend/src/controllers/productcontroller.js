@@ -1,7 +1,7 @@
 const multer = require('multer');
 const cloudinary = require('../utils/cloudinary.js');
 const fs = require('fs');
-const ProductModel = require('../models/Product.model.js');
+const ProductModel = require('../models/productmodel.js');
 
 // 1. extract the data
 //     // 1. formdata - images  - {name:" ScreenShot: 11-10-2024"}
@@ -64,8 +64,9 @@ const createProductController = async (req, res) => {
 // controller
 
 const getProductDataController = async (req, res) => {
+  console.log("hi")
   try {
-    const data = await ProductModel.find();
+    const data = await ProductModel.find({});
     return res
       .status(200)
       .send({ data, message: 'Data Fetched Successfully', success: true });
