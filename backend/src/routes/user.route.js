@@ -1,5 +1,5 @@
 const express = require('express');
-const upload = require('../middlewares/multer.js');
+const upload = require('../middleware/multer.js');
 const {
   CreateUSer,
   verifyUserController,

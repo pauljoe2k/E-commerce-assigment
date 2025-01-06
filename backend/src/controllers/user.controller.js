@@ -2,7 +2,7 @@ const UserModel = require('../models/user.model.js');
 const ErrorHandler = require('../utils/ErrorHandler.js');
 const transporter = require('../utils/sendmail.js');
 const jwt = require('jsonwebtoken'); //tokenisation of user data (every communication that happend between server(beknd) and client(ft))
-const bcrypt = require('bcrypt'); //hashes the password only
+const bcrypt = require('bcryptjs')
 
 require('dotenv').config({
   path: '../config/.env',
