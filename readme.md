@@ -90,3 +90,15 @@ check if the user entry is present in DB also compare the password.
 If Yes-> create a token and send that as cookies
 If No-> return saying Signup first
 
+## Milestone 8
+Card Componet
+Display of all the products with dummy data in Home page.
+
+## Milestone 9
+Created Product Entry Form
+Used form data to send the data over the network call.
+
+## MileStone 10
+Product Schema
+cerate end point to wirte the data into DB.
+Cloudinary, multer
