@@ -99,6 +99,33 @@ Created Product Entry Form
 Used form data to send the data over the network call.
 
 ## MileStone 10
-Product Schema
-cerate end point to wirte the data into DB.
-Cloudinary, multer
+Install Required Packages
+Use npm install to add dependencies like express, mongoose, multer, cloudinary, and dotenv.
+
+Configure Environment Variables
+Create a .env file to securely store credentials for MongoDB and Cloudinary.
+
+Set Up Product Schema
+Use Mongoose to define a schema for product details, including fields for name, description, price, and image.
+
+Integrate Multer
+Configure Multer middleware for handling file uploads from API requests.
+
+Use Cloudinary for Image Storage
+Set up Cloudinary to store uploaded images and return secure URLs.
+
+Develop the API Endpoint
+Implement an Express.js POST route to save product data to the database and upload images to Cloudinary.
+
+Test the API
+Use tools like Postman to test the endpoint by sending product data and images.
+
+## Milestone 11
+Backend Setup
+Create an API endpoint that fetches data from MongoDB and returns it in JSON format.
+
+Frontend Fetch
+Use a method to call the API endpoint (e.g., fetch or axios) to retrieve the product data.
+
+Dynamic Product Display
+Iterate through the received data and dynamically populate your product card layout with the content.
