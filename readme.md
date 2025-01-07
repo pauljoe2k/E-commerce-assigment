@@ -129,3 +129,25 @@ Use a method to call the API endpoint (e.g., fetch or axios) to retrieve the pro
 
 Dynamic Product Display
 Iterate through the received data and dynamically populate your product card layout with the content.
+
+## Milestone 12
+Backend: Endpoint Creation
+Create an endpoint in your backend to fetch data filtered by your email.
+Use MongoDB query to filter data.
+Return the filtered data as a JSON response.
+
+Frontend: Fetching Data
+
+Use fetch or an API client to call the endpoint.
+Handle the response and parse the JSON data.
+Dynamic Product Card Display
+
+Loop through the data received from the backend.
+For each item, generate the product card dynamically using JavaScript.
+Append the generated cards to the DOM.
+Key Steps
+
+Ensure CORS is enabled if needed.
+Validate and sanitize data before sending it to the frontend.
+Test the endpoint with tools like Postman.
+Optimize the product card layout for responsiveness.
