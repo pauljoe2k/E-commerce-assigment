@@ -61,7 +61,7 @@ function ProductEntryPage() {
     formDataBody.append("rating", rating);
 
     images.forEach((ele) => {
-      formDataBody.append("filepath", ele);
+      formDataBody.append("files", ele);
     });
 
     axios
