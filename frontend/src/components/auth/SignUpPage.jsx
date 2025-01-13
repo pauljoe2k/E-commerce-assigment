@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ValidationFormObject from '../../validation.js';
+import ValidationFormObject from '../../validation.jsx';
 import { Link } from 'react-router-dom';
 function SignupForm() {
   const [data, setData] = useState({
