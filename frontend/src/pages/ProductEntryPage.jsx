@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import axios from "axios";
 
@@ -213,7 +214,6 @@ function ProductEntryPage() {
         </div>
 
         {errorInput && <p className="text-red-500 text-center">{errorInput}</p>}
-
         <button
           type="submit"
           className="w-full bg-pink-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-purple-600"

@@ -1,10 +1,11 @@
 // route
 const multer = require('multer');
-const upload = multer({ dest: 'temp-uploads/' });
+const upload = multer({ dest: './temp-uploads' });
 const express = require('express');
 const {
-  createProductController, getProductDataController
-} = require('../controllers/productcontroller.js');
+  createProductController, getProductDataController,
+  updateProductController, getSinglePRoductDocumentController, deleteSingleProduct,
+} = require('../controllers/product.controller');
 const router = express.Router();
 
 router.post(
@@ -12,9 +13,13 @@ router.post(
   upload.array('files', 5),
   createProductController
 );
-router.get(
-  '/get-products',
-  getProductDataController
-)
+router.get('/get-products',getProductDataController);
+router.put(
+  '/update-products/:id',
+  upload.array('files', 5),
+  updateProductController
+);
 
+router.get('/get-single/:id', getSinglePRoductDocumentController);
+router.delete('/:id', deleteSingleProduct);
 module.exports = router;

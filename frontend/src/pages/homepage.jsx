@@ -22,6 +22,11 @@ function HomePage() {
     callhandle();
   }, []);
   console.log(data);
+  const handleDelete= async(id)=>{
+    console.log('id', id);
+    const data= await axios.delete(`http://localhost:8080/product/${id}`);
+    setData(data.data.data)
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 via-green-500 to-pink-500 font-serif">
@@ -45,6 +50,7 @@ function HomePage() {
                   discountedPrice={ele.discountedPrice}
                   rating={ele.rating}
                   id={ele._id}
+                  handleDelete={handleDelete}
                 />
               </div>
             ))

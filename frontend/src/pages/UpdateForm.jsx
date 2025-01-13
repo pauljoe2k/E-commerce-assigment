@@ -65,16 +65,16 @@ function UpdateForm(){
         });
     
         axios
-          .post("http://localhost:8080/product/create-product", formDataBody, {
+          .put(`http://localhost:8080/product/update-products/${id}`, formDataBody, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           })
           .then((response) => {
-            console.log("Product created successfully:", response);
+            console.log("Product updated successfully:", response);
           })
           .catch((error) => {
-            console.log("Error creating product:", error);
+            console.log("Error updating product:", error);
           });
       };
       useEffect(()=>{
