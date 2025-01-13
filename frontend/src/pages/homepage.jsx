@@ -11,7 +11,7 @@ function HomePage() {
       const response = await axios.get('http://localhost:8080/product/get-products');
       setData(response.data.data);
     } catch (err) {
-      setError('Failed to fetch products. Please try again later.');
+      setError('Failed to fetch products. Please try again later.',err);
     }
   };
 
@@ -32,7 +32,7 @@ function HomePage() {
       const response = await axios.delete(`http://localhost:8080/product/${id}`);
       setData(response.data.data);
     } catch (err) {
-      setError('Failed to delete the product. Please try again.');
+      setError('Failed to delete the product. Please try again.',err);
     }
   };
 
@@ -52,7 +52,7 @@ function HomePage() {
               >
                 <Card
                   title={ele.title}
-                  image={ele.images?.[0] || 'Product Image missing'}
+                  image={ele.images || 'Product Image missing'}
                   description={ele.description}
                   originalPrice={ele.originalPrice}
                   discountedPrice={ele.discountedPrice}
