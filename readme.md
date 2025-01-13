@@ -106,34 +106,124 @@ Cloudinary, multer
 
 
 
-## Milestone 11
-Backend Setup
-Create an API endpoint that fetches data from MongoDB and returns it in JSON format.
+## Project Milestone 11
+Product Schema and Endpoints
 
-Frontend Fetch
-Use a method to call the API endpoint (e.g., fetch or axios) to retrieve the product data.
+Define a schema for products, including necessary fields such as title, description, rating, discountedPrice, originalPrice, quantity, category, and images.
+Creating Endpoint to Display All Products
+Created a new API endpoint to retrieve and display all the products from the database.
 
-Dynamic Product Display
-Iterate through the received data and dynamically populate your product card layout with the content.
+// product.router.js
+router.get("/get-products", async (req, res) => {
+  try {
+    const products = await ProductModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "Products retrieved successfully",
+      data: products,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error retrieving products",
+      error: error.message,
+    });
+  }
+});
+Integrating the New Route
+Added the /get-products route in product.router.js to handle the retrieval of all product data. This route queries the database and returns a list of products.
 
-## Milestone 12
-Backend: Endpoint Creation
-Create an endpoint in your backend to fetch data filtered by your email.
-Use MongoDB query to filter data.
-Return the filtered data as a JSON response.
+const express = require("express");
+const router = express.Router();
+const ProductModel = require("./models/ProductModel");
 
-Frontend: Fetching Data
+// Endpoint to fetch all products
+router.get("/get-products", async (req, res) => {
+  // Logic to fetch products
+});
 
-Use fetch or an API client to call the endpoint.
-Handle the response and parse the JSON data.
-Dynamic Product Card Display
+module.exports = router;
+Integration with Server
+Ensure the product.router.js file is properly imported and used in the main server file:
 
-Loop through the data received from the backend.
-For each item, generate the product card dynamically using JavaScript.
-Append the generated cards to the DOM.
-Key Steps
+const productRoutes = require("./routes/product.router");
+app.use("/api/products", productRoutes);
 
-Ensure CORS is enabled if needed.
-Validate and sanitize data before sending it to the frontend.
-Test the endpoint with tools like Postman.
+## Project Milestone 12
+Implement Product Routes
+Create Product Router:
 
+Define routes for handling product-related requests (e.g., fetching product list, product details).
+Integrate Product Routes:
+
+Import the productRoutes in your main server file.
+Use the productRoutes with the /api/products endpoint.
+Test Product Routes:
+
+Ensure that the product routes are working correctly by making requests to the endpoints.
+Verify that the responses are as expected.
+Update Documentation:
+
+Document the new product routes in the README file.
+Include examples of how to use the endpoints.
+Deploy and Verify:
+
+Deploy the updated application to your development/staging environment.
+Verify that the product routes are functioning correctly in the deployed environment.
+
+## Project Milestone 13
+Implemented Update Option for Existing data
+Created an end point for Updating
+
+Defined Route for updating existing data
+Implemented Update Logic
+
+Updated the controller logic to handle update requests
+Tested Update End Point
+
+Made requests to the update endpoint to verify functionality
+Implemented FrontEnd to Update Existing Data
+Created a Form to Update Existing Data
+
+Created a form to update existing data
+Integrated Form with Backend End Point
+
+Integrated the form with the update endpoint
+Tested Update Functionality
+
+Tested the update functionality to ensure it works as expected
+
+## Project Milestone 14
+Implemented Delete Option for Existing Data
+Created an end point for Deleting
+
+Defined Route for deleting existing data
+Implemented Delete Logic
+
+Updated the controller logic to handle delete requests
+Tested Delete End Point
+
+Made requests to the delete endpoint to verify functionality
+Updated Frontend Logic to Delete Existing Data
+
+Updated the frontend logic to include a delete option
+
+
+## Project Milestone 15
+Implemented Navbar for the Application
+Created a navbar for the application
+Implemented Responsive Design for the Application
+Implemented a responsive design for the application
+
+Ensured the application works well on different screen sizes and devices
+
+## Project Milestone 16
+Implemented singleProduct page
+Created a single product page to display a single product
+
+Implemented the logic to fetch a single product from the database
+
+Add quantity to cart functionality
+Implemented the logic to add quantity to cart functionality
+
+Implemented the logic to update the quantity in the cart
