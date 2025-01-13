@@ -99,9 +99,12 @@ Created Product Entry Form
 Used form data to send the data over the network call.
 
 ## MileStone 10
+
 Product Schema
 cerate end point to wirte the data into DB.
 Cloudinary, multer
+
+
 
 ## Milestone 11
 Backend Setup
@@ -133,4 +136,4 @@ Key Steps
 Ensure CORS is enabled if needed.
 Validate and sanitize data before sending it to the frontend.
 Test the endpoint with tools like Postman.
-Optimize the product card layout for responsiveness.
+
