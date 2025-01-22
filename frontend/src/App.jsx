@@ -6,11 +6,13 @@ import ProductEntryPage from './pages/ProductEntryPage';
 import UpdateForm from './pages/UpdateForm';
 import Navbar from './components/navbar/navbar';
 import SinglePageProduct from './pages/singleproductpage';
+import Navbar from './components/navBar/NavBar';
+
+
 
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />

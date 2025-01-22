@@ -58,6 +58,7 @@ function ProductEntryPage() {
       return setInputError('Enter The Information Inside Feilds Correctly...');
     }
     let formDataBody = new FormData();
+
     formDataBody.append('title', title);
     formDataBody.append('description', description);
     formDataBody.append('category', category);
@@ -69,6 +70,7 @@ function ProductEntryPage() {
     console.log(Images);
     Images.map((ele) => {
       formDataBody.append('files', ele);
+
     });
 
     console.log(formDataBody);
