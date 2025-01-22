@@ -1,13 +1,17 @@
+import axios from 'axios';
 import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 
 function LoginPage() {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -17,16 +21,17 @@ function LoginPage() {
     });
   };
 
-  const handleClickLogin = async (event) => {
-    event.preventDefault();
-    setError('');
-    try {
-      const response = await axios.post('http://localhost:8080/login', credentials);
-      console.log('Login successful:', response.data);
-      // Handle navigation or success feedback here
-    } catch (err) {
-      setError('Invalid email or password. Please try again.');
-    }
+  const handleClickLogin = async (e) => {
+    // axios request to backend
+    e.preventDefault();
+    const response = await axios.post(
+      'http://localhost:8080/user/login',
+      credentials
+    );
+    localStorage.setItem('token', response.data.token);
+    console.log(data);
+    navigate('/');
+
   };
 
   return (
@@ -42,8 +47,10 @@ function LoginPage() {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleClickLogin}>
+
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form class="space-y-6" onSubmit={handleClickLogin}>
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-900">
               Email address
