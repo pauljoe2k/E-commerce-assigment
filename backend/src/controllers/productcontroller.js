@@ -1,14 +1,8 @@
+
 const multer = require('multer');
 const cloudinary = require('../utils/cloudinary.js');
 const fs = require('fs');
-const ProductModel = require('../models/Product.model.js');
-
-// 1. extract the data
-//     // 1. formdata - images  - {name:" ScreenShot: 11-10-2024"}
-//     // 2. title, description....
-// 2. insert the both the data into the database thorught model (blueprint of product schema)
-//     1. images : formdata (image)-->cloudinary-->"https://link"
-//     2. title
+const ProductModel = require('../models/product.model.js');
 
 const createProductController = async (req, res) => {
   const {
@@ -22,7 +16,7 @@ const createProductController = async (req, res) => {
   } = req.body;
 
   try {
-    const arrayImage = req.files.map(async (singleFile, index) => {
+    const arrayImage = req.files && req.files?.map(async (singleFile, index) => {
       return cloudinary.uploader
         .upload(singleFile.path, {
           folder: 'uploads',
@@ -61,19 +55,92 @@ const createProductController = async (req, res) => {
     return res.status(500).send({ message: er.message, success: false });
   }
 };
-// controller
 
-const getProductDataController = async (req, res) => {
+
+const getProductDataController= async (req,res)=>{
   try {
-    const data = await ProductModel.find();
+    const data= await ProductModel.find();
+    return res.status(200).send({data, message:"Data fetched successfully"})
+    
+  } catch (error) {
+    return res.status(500).send({message: error.message, success:false})
+  }
+}
+
+
+const updateProductController=async(req, res)=>{
+  const {
+    title,
+    description,
+    rating,
+    discountedPrice,
+    originalPrice,
+    quantity,
+    category,
+  } = req.body;
+  const {id}=req.params;
+  try {
+    const checkIfProductExists= await ProductModel.findOne({_id:id});
+    if(!checkIfProductExists){
+      return res.status(404).send({message: "Product not found"})
+    }
+    const arrayImage = req.files?.map(async (singleFile, index) => {
+      return cloudinary.uploader
+        .upload(singleFile.path, {
+          folder: 'uploads',
+        })
+        .then((result) => {
+          fs.unlinkSync(singleFile.path);
+          return result.url;
+        });
+    });
+    const ImageData=await Promise.all(arrayImage);
+    const findAndUpdate=await ProductModel.findByIdAndUpdate({_id:id}, {title,
+      description,
+      rating,
+      discountedPrice,
+      originalPrice,
+      quantity,
+      category,
+    images: ImageData}, {new:true})
+      return res.status(201).send({message:"Document updated successfully", sucess: true, UpdatedResult: findAndUpdate})
+  } catch (error) {
+    return res.send(500).send({message: error.message, sucess: false})
+  }
+}
+// controller
+const getSinglePRoductDocumentController = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await ProductModel.findOne({ _id: id });
+    console.log(data);
+    if (!data) {
+      return res.status(404).send({ Message: 'Product Not Found' });
+    }
+
     return res
       .status(200)
-      .send({ data, message: 'Data Fetched Successfully', success: true });
+      .send({ message: 'Product Successfully fetched', data, success: true });
   } catch (er) {
-    // 500
-
-    return res.status(500).send({ message: er.message, success: false });
+    return res.status(200).send({ message: er.message, success: false });
   }
 };
-
-module.exports = { createProductController, getProductDataController };
+const deleteSingleProduct= async(req, res)=>{
+  const {id}=req.params;
+  try{
+    const data=await ProductModel.findOne({_id: id});
+    if (!data){
+      return res.status(404).send({message: 'Product not found'});
+    }
+    await ProductModel.findByIdAndDelete({_id: id});
+    const newData= await ProductModel.find();
+    return res.status(200).send({
+      message: 'Product successfully fetched',
+      data: newData,
+      success: true,
+    })
+  } catch(error){
+    return res.status(500).send({message: error.message, success: false})
+  }
+}
+module.exports = { createProductController, getProductDataController, updateProductController, getSinglePRoductDocumentController, deleteSingleProduct };
