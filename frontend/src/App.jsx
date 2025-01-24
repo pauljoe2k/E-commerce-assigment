@@ -4,9 +4,9 @@ import Signup from './pages/signuppage';
 import Login from './pages/login';
 import ProductEntryPage from './pages/ProductEntryPage';
 import UpdateForm from './pages/UpdateForm';
-import Navbar from './components/navbar/navbar';
 import SinglePageProduct from './pages/singleproductpage';
-import Navbar from './components/navBar/NavBar';
+import Navbar from './components/navbar/navbar';
+import AddressCard from './components/address/addressCard';
 
 
 
@@ -21,6 +21,7 @@ function App() {
         <Route path="/update-form/:id" element={<UpdateForm />} />
         <Route path="/product-details/:id" element={<SinglePageProduct />} />
       </Routes>
+      <AddressCard />
     </>
   );
 }
