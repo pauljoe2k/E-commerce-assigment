@@ -230,3 +230,7 @@ Implemented the logic to add quantity to cart functionality
 
 Implemented the logic to update the quantity in the cart
 
+Project Milestone 19
+Created CartPage Created CartCard component
+
+ Created new route for card populated card fetch route in backend
