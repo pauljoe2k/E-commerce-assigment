@@ -232,8 +232,11 @@ Implemented the logic to update the quantity in the cart
 Created CartPage
 Created CartCard component
 Created new route for card
-populated card fetch route in backend
+populated card fetch route in backend\
 
+## Milestone 20
+Added UI for profile route
+ceated route for user data
 
 ## MILESTONE 21
 
