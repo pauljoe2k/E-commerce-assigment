@@ -2,7 +2,8 @@ import axios from "axios";
 import {  HeartOffIcon, ShoppingBag, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ImageModal from "../Components/imageModals/imageModal";
+import ImageModal from "../components/imageModels/ImageModels";
+
 function SinglePageProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState({});

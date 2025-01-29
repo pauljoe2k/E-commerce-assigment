@@ -2,9 +2,10 @@ const UserModel = require('../models/user.model.js');
 const ErrorHandler = require('../utils/ErrorHandler.js');
 const transporter = require('../utils/sendmail.js');
 const jwt = require('jsonwebtoken'); //tokenisation of user data (every communication that happend between server(beknd) and client(ft))
-const bcrypt = require('bcrypt'); //hashes the password only
+const bcrypt = require('bcryptjs'); //hashes the password only
 const cloudinary = require('../utils/cloudinary.js');
 const fs = require('fs');
+const { default: mongoose } = require('mongoose');
 require('dotenv').config({
   path: '../config/.env',
 });
@@ -92,20 +93,21 @@ async function verifyUserController(req, res) {
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+  console.log(req.file)
   try {
     const checkUserPresentinDB = await UserModel.findOne({ email: email });
     if (checkUserPresentinDB) {
       return res.status(403).send({ message: 'User already present' });
     }
     console.log(req.file, process.env.cloud_name);
-    const ImageAddress = await cloudinary.uploader
-      .upload(req.file.path, {
-        folder: 'uploads',
-      })
-      .then((result) => {
-        fs.unlinkSync(req.file.path);
-        return result.url;
-      });
+    const ImageAddress = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'uploads',
+    })
+    .then((result) => {
+      fs.unlinkSync(req.file.path);
+      return result.url;
+    });
+    console.log(ImageAddress);
 
     console.log('url', ImageAddress);
     bcrypt.hash(password, 10, async function (err, hashedPassword) {
@@ -169,4 +171,30 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { CreateUSer, verifyUserController, signup, login };
+const getUSerData = async (req, res) => {
+  const userId = req.UserId;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(401).send({ message: 'Send Valid User Id' });
+    }
+
+    const checkUserPresentinDB = await UserModel.findOne({ _id: userId });
+    if (!checkUserPresentinDB) {
+      return res
+        .status(401)
+        .send({ message: 'Please Signup, user not present' });
+    }
+
+    return res.status(200).send({ data: checkUserPresentinDB });
+  } catch (er) {
+    return res.status(500).send({ message: er.message });
+  }
+};
+
+module.exports = {
+  CreateUSer,
+  verifyUserController,
+  signup,
+  login,
+  getUSerData,
+};

@@ -1,5 +1,3 @@
-
-=======
 # E-commerce-Website
 
 
@@ -230,7 +228,30 @@ Implemented the logic to add quantity to cart functionality
 
 Implemented the logic to update the quantity in the cart
 
-Project Milestone 19
-Created CartPage Created CartCard component
+## Project Milestone 19
+Created CartPage
+Created CartCard component
+Created new route for card
+populated card fetch route in backend
 
- Created new route for card populated card fetch route in backend
+
+## MILESTONE 21
+
+Overview
+This project is a simple frontend implementation for adding and managing an address in a user profile. It includes:
+
+A dedicated address form page for input.
+A state to store the input address.
+Navigation functionality to access the address form page when the user clicks "Add Address" from the profile.
+Features
+Address Form:
+
+Users can input their address details, such as address line, city, state, and postal code.
+State Management:
+
+The form uses a state object to store the input address data dynamically.
+Navigation:
+
+Clicking the "Add Address" button in the profile navigates to the address form page.
+
+>>>>>>> efdef28dda7cc26bdbd1f261acf47bea2b2d2def
