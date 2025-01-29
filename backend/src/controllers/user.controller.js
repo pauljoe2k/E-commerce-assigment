@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken'); //tokenisation of user data (every communic
 const bcrypt = require('bcryptjs'); //hashes the password only
 const cloudinary = require('../utils/cloudinary.js');
 const fs = require('fs');
+const { default: mongoose } = require('mongoose');
 require('dotenv').config({
   path: '../config/.env',
 });
@@ -92,20 +93,21 @@ async function verifyUserController(req, res) {
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+  console.log(req.file)
   try {
     const checkUserPresentinDB = await UserModel.findOne({ email: email });
     if (checkUserPresentinDB) {
       return res.status(403).send({ message: 'User already present' });
     }
     console.log(req.file, process.env.cloud_name);
-    const ImageAddress = await cloudinary.uploader
-      .upload(req.file.path, {
-        folder: 'uploads',
-      })
-      .then((result) => {
-        fs.unlinkSync(req.file.path);
-        return result.url;
-      });
+    const ImageAddress = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'uploads',
+    })
+    .then((result) => {
+      fs.unlinkSync(req.file.path);
+      return result.url;
+    });
+    console.log(ImageAddress);
 
     console.log('url', ImageAddress);
     bcrypt.hash(password, 10, async function (err, hashedPassword) {
@@ -169,30 +171,30 @@ const login = async (req, res) => {
   }
 };
 
-const AddaddressController = async (req,res) =>{
+const getUSerData = async (req, res) => {
   const userId = req.UserId;
-  const{ city , country, address1, address2 , zipcode, addressType } = req.body
-  try{
-    const userFindONe = await UserModel.findOne({_id:userId});
-    if(!userFindONe){
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(401).send({ message: 'Send Valid User Id' });
+    }
+
+    const checkUserPresentinDB = await UserModel.findOne({ _id: userId });
+    if (!checkUserPresentinDB) {
       return res
-      .status(404)
-      .send({message:'User not Found', success:false});
+        .status(401)
+        .send({ message: 'Please Signup, user not present' });
     }
-    const UserAddress = {
-      country,
-      city,
-      address1,
-      address2,
-      addressType,
-      zipcode
-    }
-  }catch(err){
-    console.log(err.message);
-    return res.status(403).send({ message: er.message, success: false });
+
+    return res.status(200).send({ data: checkUserPresentinDB });
+  } catch (er) {
+    return res.status(500).send({ message: er.message });
   }
+};
 
-}
-
-
-module.exports = { CreateUSer, verifyUserController, signup, login };
+module.exports = {
+  CreateUSer,
+  verifyUserController,
+  signup,
+  login,
+  getUSerData,
+};
