@@ -4,7 +4,6 @@ import Signup from './pages/signuppage';
 import Login from './pages/login';
 import ProductEntryPage from './pages/ProductEntryPage';
 import UpdateForm from './pages/UpdateForm';
-import Navbar from './components/navbar/navbar';
 import SinglePageProduct from './pages/singleproductpage';
 import Navbar from './components/navBar/NavBar';
 import AddressCard from './components/address/addressCard';
@@ -14,6 +13,7 @@ import AddressCard from './components/address/addressCard';
 function App() {
   return (
     <>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
@@ -21,8 +21,9 @@ function App() {
         <Route path="/product-entry-page" element={<ProductEntryPage />} />
         <Route path="/update-form/:id" element={<UpdateForm />} />
         <Route path="/product-details/:id" element={<SinglePageProduct />} />
+        <Route path="/address-card" element={<AddressCard />} />
       </Routes>
-      <AddressCard />
+      
     </>
   );
 }

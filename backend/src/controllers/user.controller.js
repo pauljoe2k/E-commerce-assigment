@@ -2,7 +2,7 @@ const UserModel = require('../models/user.model.js');
 const ErrorHandler = require('../utils/ErrorHandler.js');
 const transporter = require('../utils/sendmail.js');
 const jwt = require('jsonwebtoken'); //tokenisation of user data (every communication that happend between server(beknd) and client(ft))
-const bcrypt = require('bcrypt'); //hashes the password only
+const bcrypt = require('bcryptjs'); //hashes the password only
 const cloudinary = require('../utils/cloudinary.js');
 const fs = require('fs');
 require('dotenv').config({
@@ -168,5 +168,31 @@ const login = async (req, res) => {
     return res.status(403).send({ message: er.message, success: false });
   }
 };
+
+const AddaddressController = async (req,res) =>{
+  const userId = req.UserId;
+  const{ city , country, address1, address2 , zipcode, addressType } = req.body
+  try{
+    const userFindONe = await UserModel.findOne({_id:userId});
+    if(!userFindONe){
+      return res
+      .status(404)
+      .send({message:'User not Found', success:false});
+    }
+    const UserAddress = {
+      country,
+      city,
+      address1,
+      address2,
+      addressType,
+      zipcode
+    }
+  }catch(err){
+    console.log(err.message);
+    return res.status(403).send({ message: er.message, success: false });
+  }
+
+}
+
 
 module.exports = { CreateUSer, verifyUserController, signup, login };
