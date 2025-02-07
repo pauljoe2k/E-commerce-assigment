@@ -254,3 +254,15 @@ Navigation:
 
 Clicking the "Add Address" button in the profile navigates to the address form page.
 
+
+## MILESTONE 22
+
+updated address form to send data to backend api
+created endpoint to handle address form data
+created address deletion endpoint
+
+## MILESTONE 23
+added checkout from cart
+added get-addresess endpoint in cart
+added select addresses page
+
