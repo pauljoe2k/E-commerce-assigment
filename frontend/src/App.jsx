@@ -9,7 +9,7 @@ import Navbar from './components/navBar/NavBar';
 import AddressCard from './components/address/addressCard';
 import CartPage from './pages/CartPage';
 import ProfilePage from './pages/ProfilePage';
-
+import SelectAddresspage from './pages/SelectAddresspage'
 
 
 
@@ -24,9 +24,10 @@ function App() {
         <Route path="/product-entry-page" element={<ProductEntryPage />} />
         <Route path="/update-form/:id" element={<UpdateForm />} />
         <Route path="/product-details/:id" element={<SinglePageProduct />} />
-        <Route path="/address-card" element={<AddressCard />} />
+        <Route path="/add-address" element={<AddressCard />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path='profile' element={<ProfilePage/>} />
+        <Route path="/select-address" element={<SelectAddresspage />} />
       </Routes>
       
     </>

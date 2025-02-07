@@ -43,8 +43,8 @@ async function CreateUSer(req, res) {
   };
   const token = generateToken(data);
   await transporter.sendMail({
-    to: 'naayaankumar@gmail.com',
-    from: 'naayaankumar@gmail.com',
+    to: 'paulkoshy890@gmail.com',
+    from: 'paulkoshy890@gmail.com',
     subject: 'verification email from follow along project',
     text: 'Text',
     html: `<h1>Hello world   http://localhost:5173/activation/${token} </h1>`,
@@ -93,21 +93,20 @@ async function verifyUserController(req, res) {
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.file)
   try {
     const checkUserPresentinDB = await UserModel.findOne({ email: email });
     if (checkUserPresentinDB) {
       return res.status(403).send({ message: 'User already present' });
     }
     console.log(req.file, process.env.cloud_name);
-    const ImageAddress = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'uploads',
-    })
-    .then((result) => {
-      fs.unlinkSync(req.file.path);
-      return result.url;
-    });
-    console.log(ImageAddress);
+    const ImageAddress = await cloudinary.uploader
+      .upload(req.file.path, {
+        folder: 'uploads',
+      })
+      .then((result) => {
+        fs.unlinkSync(req.file.path);
+        return result.url;
+      });
 
     console.log('url', ImageAddress);
     bcrypt.hash(password, 10, async function (err, hashedPassword) {
@@ -190,6 +189,7 @@ const getUSerData = async (req, res) => {
     return res.status(500).send({ message: er.message });
   }
 };
+
 const AddAddressController = async (req, res) => {
   const userId = req.UserId;
   const { city, country, address1, address2, zipCode, addressType } = req.body;
@@ -200,6 +200,7 @@ const AddAddressController = async (req, res) => {
         .status(404)
         .send({ message: 'User not found', success: false });
     }
+
     const userAddress = {
       country,
       city,
@@ -208,8 +209,10 @@ const AddAddressController = async (req, res) => {
       zipCode,
       addressType,
     };
+
     userFindOne.address.push(userAddress);
     const response = await userFindOne.save();
+
     return res
       .status(201)
       .send({ message: 'User Address Added', success: true, response });
@@ -218,12 +221,69 @@ const AddAddressController = async (req, res) => {
   }
 };
 
+const DeleteAddyController = async (req, res) => {
+  const userId = req.UserId;
+  const { id } = req.params;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res
+        .status(401)
+        .send({ message: 'Un-Authorised please signup', sucess: false });
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(404)
+        .send({ message: 'Address Id is in-valid', sucess: false });
+    }
 
+    const checkIfUSerPresent = await UserModel.findOne({ _id: userId });
+    if (!checkIfUSerPresent) {
+      return res
+        .status(401)
+        .send({ message: 'Un-Authorised please signup', sucess: false });
+    }
+
+    const response = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { address: { _id: id } } },
+      { new: true }
+    );
+
+    return res
+      .status(201)
+      .send({ message: 'User Address deleted', success: true, response });
+  } catch (er) {
+    return res.status(500).send({ message: er.message, sucess: false });
+  }
+};
+
+const GetAddressConroller = async (req, res) => {
+  const userId = req.UserId;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(401).send({ message: 'Please login, un-Authorised' });
+    }
+    const checkUser = await UserModel.findOne({ _id: userId }, { address: 1 });
+    if (!checkUser) {
+      return res.status(401).send({ message: 'Please signup, un-Authorised' });
+    }
+
+    return res.status(200).send({
+      userInfo: checkUser,
+      message: 'Success',
+      success: true,
+    });
+  } catch (er) {
+    return res.status(500).send({ message: er.message });
+  }
+};
 module.exports = {
+  GetAddressConroller,
   CreateUSer,
   verifyUserController,
   signup,
   login,
   getUSerData,
   AddAddressController,
+  DeleteAddyController,
 };

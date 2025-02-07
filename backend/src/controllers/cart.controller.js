@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
-const UserModel = require('../models/user.model');
-const CartModel = require('../models/cart.model');
+const UserModel = require('../models/user.model.js');
+const CartModel = require('../models/cart.model.js');
 async function AddToCartController(req, res) {
   const { productId, quantity } = req.body;
   const userId = req.UserId;
   console.log(userId);
   try {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
+      console.log("product id is inavlid")
       return res.status(400).send({ message: 'Send Valid Product ID' });
     }
     if (!mongoose.Types.ObjectId.isValid(userId)) {
+      console.log("user ID is invalid")
       return res
         .status(400)
         .send({ message: 'Send Valid User ID', success: false });
@@ -17,6 +19,7 @@ async function AddToCartController(req, res) {
 
     const checkUSerpresent = await UserModel.findOne({ _id: userId });
     if (!checkUSerpresent) {
+      console.log("invalid user")
       return res
         .status(401)
         .send({ message: 'Un-Authorized Please signup', success: false });
@@ -26,6 +29,7 @@ async function AddToCartController(req, res) {
       productId: productId,
     });
     if (checkIfProductPresent) {
+      console.log("product is already present in the cart")
       return res
         .status(400)
         .send({ message: 'Product Already Present in Cart', success: false });
@@ -37,10 +41,13 @@ async function AddToCartController(req, res) {
       userId,
     });
 
+    console.log("product added to cart")
+
     return res
       .status(201)
       .send({ message: 'Product is successfully created', success: true });
   } catch (er) {
+    console.log(er.message)
     return res.status(500).send({ message: er.message, success: false });
   }
 }
