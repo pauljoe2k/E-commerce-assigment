@@ -254,4 +254,3 @@ Navigation:
 
 Clicking the "Add Address" button in the profile navigates to the address form page.
 
->>>>>>> efdef28dda7cc26bdbd1f261acf47bea2b2d2def

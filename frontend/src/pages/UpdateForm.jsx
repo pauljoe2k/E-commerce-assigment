@@ -1,237 +1,119 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-function UpdateForm(){
-  const { id } = useParams();
-    const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        rating: 0,
-        discountedPrice: 0,
-        originalPrice: 0,
-        quantity: 0,
-        category: "",
-      });
-      const [errorInput, setInputError] = useState("");
-      const [images, setImages] = useState(null);
-    
-      const handleImageUpload = (e) => {
-        const imagesArray = Array.from(e.target.files);
-        setImages(imagesArray);
-      };
-    
-      const handleChange = (e) => {
-        setInputError("");
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
+  import { useState, useEffect } from "react";
+  import { useParams } from "react-router-dom";
+  import axios from "axios";
+  function UpdateForm(){
+    const { id } = useParams();
+      const [formData, setFormData] = useState({
+          title: "",
+          description: "",
+          rating: 0,
+          discountedPrice: 0,
+          originalPrice: 0,
+          quantity: 0,
+          category: "",
         });
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const {
-          title,
-          description,
-          rating,
-          discountedPrice,
-          originalPrice,
-          quantity,
-          category,
-        } = formData;
-        if (
-          title.length <= 0 ||
-          description.length <= 0 ||
-          discountedPrice <= 0 ||
-          originalPrice <= 0 ||
-          quantity <= 0 ||
-          category.length <= 0
-        ) {
-          return setInputError("Please fill all the fields correctly.");
-        }
-    
-        let formDataBody = new FormData();
-        formDataBody.append("title", title);
-        formDataBody.append("description", description);
-        formDataBody.append("category", category);
-        formDataBody.append("discountedPrice", discountedPrice);
-        formDataBody.append("originalPrice", originalPrice);
-        formDataBody.append("quantity", quantity);
-        formDataBody.append("rating", rating);
-    
-        images?.map((ele) => {
-          formDataBody.append("filepath", ele);
-        });
-    
-        axios
-          .put(`http://localhost:8080/product/update-products/${id}`, formDataBody, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            console.log("Product updated successfully:", response);
-          })
-          .catch((error) => {
-            console.log("Error updating product:", error);
-          });
-      };
-      useEffect(()=>{
-        const getDataForId=async ()=>{
-          const singleData= await axios.get(
-            `http://localhost:8080/product/get-single/${id}`
-            )
-          setFormData(singleData.data.data)
-          setImages(singleData.data.images)
+        const [errorInput, setInputError] = useState("");
+        const [images, setImages] = useState(null);
+      
+        const handleImageUpload = (e) => {
+          const imagesArray = Array.from(e.target.files);
+          setImages(imagesArray);
         };
-        getDataForId();
-      },[id])
-      return (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-r from-pink-500 via-green-500 to-pink-500 font-serif">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg"
-          >
-            <div className="text-center mb-6">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSlgUtYQLmh29X34jsMTp3LWUZIJAxNODrRkEOPXIbWToqH8yqNCS95CIyBh2xzwxJYKs&usqp=CAU"
-                alt="Logo"
-                className="w-35 mx-auto"
-              />
-            </div>
-            <h2 className="text-2xl font-bold mb-6 text-center text-purple-500">
-              Product Entry Form
-            </h2>
-    
-            <div className="mb-4">
-              <label htmlFor="title" className="text-gray-700 block">
-                Product Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter product title"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="description" className="text-gray-700 block">
-                Product Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter product description"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="discountedPrice" className="text-gray-700 block">
-                Discounted Price
-              </label>
-              <input
-                type="number"
-                id="discountedPrice"
-                name="discountedPrice"
-                value={formData.discountedPrice}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter discounted price"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="originalPrice" className="text-gray-700 block">
-                Original Price
-              </label>
-              <input
-                type="number"
-                id="originalPrice"
-                name="originalPrice"
-                value={formData.originalPrice}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter original price"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="quantity" className="text-gray-700 block">
-                Stock Quantity
-              </label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter stock quantity"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="images" className="text-gray-700 block">
-                Upload Product Images
-              </label>
-              <input
-                type="file"
-                id="images"
-                name="images"
-                multiple
-                onChange={handleImageUpload}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="category" className="text-gray-700 block">
-                Category
-              </label>
-              <input
-                type="text"
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter product category"
-              />
-            </div>
-    
-            <div className="mb-4">
-              <label htmlFor="rating" className="text-gray-700 block">
-                Product Rating
-              </label>
-              <input
-                type="number"
-                id="rating"
-                name="rating"
-                value={formData.rating}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter product rating"
-              />
-            </div>
-    
-            {errorInput && <p className="text-red-500 text-center">{errorInput}</p>}
-    
-            <button
-              type="submit"
-              className="w-full bg-pink-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-purple-600"
-            >
-              Submit
-            </button>
+      
+        const handleChange = (e) => {
+          setInputError("");
+          const { name, value } = e.target;
+          setFormData({
+            ...formData,
+            [name]: value,
+          });
+        };
+      
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          const {
+            title,
+            description,
+            rating,
+            discountedPrice,
+            originalPrice,
+            quantity,
+            category,
+          } = formData;
+          if (
+            title.length <= 0 ||
+            description.length <= 0 ||
+            discountedPrice <= 0 ||
+            originalPrice <= 0 ||
+            quantity <= 0 ||
+            category.length <= 0
+          ) {
+            return setInputError("Please fill all the fields correctly.");
+          }
+      
+          let formDataBody = new FormData();
+          formDataBody.append("title", title);
+          formDataBody.append("description", description);
+          formDataBody.append("category", category);
+          formDataBody.append("discountedPrice", discountedPrice);
+          formDataBody.append("originalPrice", originalPrice);
+          formDataBody.append("quantity", quantity);
+          formDataBody.append("rating", rating);
+      
+          images?.map((ele) => {
+            formDataBody.append("filepath", ele);
+          });
+      
+          axios
+            .put(`http://localhost:8080/product/update-products/${id}`, formDataBody, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((response) => {
+              console.log("Product updated successfully:", response);
+            })
+            .catch((error) => {
+              console.log("Error updating product:", error);
+            });
+        };
+        useEffect(()=>{
+          const getDataForId=async ()=>{
+            const singleData= await axios.get(
+              `http://localhost:8080/product/get-single/${id}`
+              )
+            setFormData(singleData.data.data)
+            setImages(singleData.data.images)
+          };
+          getDataForId();
+        },[id])
+        return (
+          <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-800 to-gray-600 bg-[url('https://www.toptal.com/designers/subtlepatterns/uploads/dark-floral.png')] bg-cover bg-center">
+          <form onSubmit={handleSubmit} className="bg-gray-700 bg-opacity-90 p-6 rounded-xl shadow-lg w-96 border border-gray-500">
+            <h2 className="text-2xl font-semibold text-center text-gray-200 mb-4">💀Product Entry💀 </h2>
+        
+            <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Product Title" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+            
+            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Product Description" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none"></textarea>
+        
+            <input type="number" name="discountedPrice" value={formData.discountedPrice} onChange={handleChange} placeholder="Discounted Price" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+        
+            <input type="number" name="originalPrice" value={formData.originalPrice} onChange={handleChange} placeholder="Original Price" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+        
+            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} placeholder="Stock Quantity" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+        
+            <input type="file" name="images" multiple onChange={handleImageUpload} className="w-full border border-gray-500 bg-gray-600 text-gray-300 rounded-lg px-4 py-2 mb-3 file:bg-gray-500 file:text-white file:border-0 file:px-3 file:py-1 file:rounded-lg file:cursor-pointer hover:file:bg-gray-400" />
+        
+            <input type="text" name="category" value={formData.category} onChange={handleChange} placeholder="Category" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+        
+            <input type="number" name="rating" value={formData.rating} onChange={handleChange} placeholder="Rating" className="w-full border border-gray-500 bg-gray-600 text-white rounded-lg px-4 py-2 mb-3 focus:outline-none" />
+        
+            {errorInput && <p className="text-red-500 text-sm text-center">{errorInput}</p>}
+        
+            <button type="submit" className="w-full bg-gray-500 text-white py-2 rounded-lg mt-4 hover:bg-gray-400 transition duration-300">Submit</button>
           </form>
         </div>
-      );
-}
-export default UpdateForm;
+        
+        );
+  }
+  export default UpdateForm;

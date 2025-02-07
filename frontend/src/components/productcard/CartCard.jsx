@@ -49,7 +49,7 @@ export default function CartCard({
             </span>
             <span className="text-red-500">{discountedPrice}% OFF</span>
           </div>
-
+ 
           {/* Return Policy */}
           <div className="mt-4 flex items-center gap-2 text-gray-600">
             <RotateCcw className="w-5 h-5" />
