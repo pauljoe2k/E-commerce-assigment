@@ -266,3 +266,15 @@ added checkout from cart
 added get-addresess endpoint in cart
 added select addresses page
 
+## MILESTONE 24
+added Order confirmation
+displayed products in order confirmation
+displayed selected address in order confirmation page using localStorage
+
+## MILESTONE 25
+added backend endpoint to confirm order
+created order database
+created order router, model and controller
+
+## MILESTONE 26
+added /user-order-details backend route and controller to fetch the orders of the user
