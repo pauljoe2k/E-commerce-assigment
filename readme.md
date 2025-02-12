@@ -228,6 +228,20 @@ Implemented the logic to add quantity to cart functionality
 
 Implemented the logic to update the quantity in the cart
 
+## Milestone 17:
+Created Cart Schema
+
+Created Cart Model and Controller
+
+Created add products and get products endpoint for Cart
+
+add products to cart from frontend
+
+## Milestone 18:
+created endpoint.
+
+created cart page to view cart items.
+
 ## Project Milestone 19
 Created CartPage
 Created CartCard component
